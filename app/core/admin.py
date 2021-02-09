@@ -23,3 +23,4 @@ class UserAdmin(BaseUserAdmin):
 
 # Registering UserAdmin for admin
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Meme)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.core.validators import URLValidator
 
 class UserManager(BaseUserManager):
 
@@ -35,3 +36,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
+class Meme(models.Model):
+    """Meme model to store the meme details"""
+
+    name = models.CharField(max_length=255)
+    url = models.TextField(validators=[URLValidator()])
+    caption = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.caption
