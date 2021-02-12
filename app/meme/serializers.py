@@ -9,7 +9,15 @@ class MemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meme
         fields = ('id', 'name', 'url', 'caption')
-        read_only_fields = ('id', 'name')
+        read_only_fields = ('id',)
+    
+class MemeSerializerWithoutName(serializers.ModelSerializer):
+    """Serializer for Meme Objects without name field"""
+
+    class Meta:
+        model = Meme
+        fields = ('id', 'name', 'url', 'caption')
+        read_only_fields = ('id','name')
 
         
 

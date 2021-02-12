@@ -8,6 +8,14 @@ class MemeViewSet(viewsets.ModelViewSet):
     queryset = Meme.objects.all()
     serializer_class = serializers.MemeSerializer
 
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+
+        if self.request.method == 'PUT':
+            serializer_class = serializers.MemeSerializerWithoutName
+
+        return serializer_class
+
     def perform_create(self, serializer):
         """Create a new meme"""
         serializer.save()

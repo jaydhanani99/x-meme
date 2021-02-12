@@ -28,4 +28,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: x_meme
+      MYSQL_ROOT_HOST: '%'
+    # ports:
+    #   - "3306:3306"
     
