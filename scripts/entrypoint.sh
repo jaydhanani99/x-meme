@@ -8,6 +8,8 @@ set -e
 #   apache in order to serve the static files because proxy serves static file very effeciently compare to django applicaion itself.
 python manage.py collectstatic --noinput
 
+python manage.py wait_for_db
+python manage.py migrate
 # Runs the uwsgi server
     # --socket specifies run as TCP socket on port 8000 from our proxy
     # master specifies to run as master service so it runs uwsgi in foreground instead of background
