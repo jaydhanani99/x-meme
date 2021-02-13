@@ -10,8 +10,8 @@ class MemePagination(pagination.PageNumberPagination):
     max_page_size = 100
     def get_paginated_response(self, data):
         return Response({
-            # 'next_page': self.get_next_link(),
-            # 'previous_page': self.get_previous_link(),
+            'next_page': self.get_next_link(),
+            'previous_page': self.get_previous_link(),
             'count': self.page.paginator.count,
             'total_pages': self.page.paginator.num_pages,
             'current': self.page.number,
