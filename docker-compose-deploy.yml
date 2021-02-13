@@ -14,7 +14,7 @@ services:
       - DB_PASSWORD=root
       - DEBUG=0
       - SECRET_KEY=samplesecretforproduction
-      - ALLOWED_HOSTS=127.0.0.1,localhost,13.127.92.33,*
+      - ALLOWED_HOSTS=127.0.0.1,localhost
     # It means app service depends on app service so db service should start first
     depends_on:
       - db
