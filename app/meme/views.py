@@ -1,5 +1,6 @@
-from rest_framework import viewsets, mixins, pagination
+from rest_framework import viewsets, mixins, pagination, status
 from rest_framework.response import Response
+from django.db import IntegrityError
 
 from core.models import Meme
 from meme import serializers
@@ -20,7 +21,7 @@ class MemePagination(pagination.PageNumberPagination):
 
 class MemeViewSet(viewsets.ModelViewSet):
     """Manage memes in database"""
-    queryset = Meme.objects.all()
+    queryset = Meme.objects.all().order_by('-id')
     serializer_class = serializers.MemeSerializer
     pagination_class = MemePagination
 
@@ -32,6 +33,23 @@ class MemeViewSet(viewsets.ModelViewSet):
 
         return serializer_class
 
-    def perform_create(self, serializer):
-        """Create a new meme"""
-        serializer.save()
+    # def perform_create(self, serializer):
+    #     """Create a new meme"""
+    #     serializer.save()
+
+    def create(self, request, *args, **kwargs):
+        # Override create method to prevent duplicate object creation
+        serializer = serializers.MemeSerializer(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+
+        name = serializer.validated_data['name']
+        caption = serializer.validated_data['caption']
+        url = serializer.validated_data['url']
+
+        if Meme.objects.filter(name=name, caption=caption, url=url).exists():
+            return Response(status=status.HTTP_409_CONFLICT)
+            
+        # Meme.objects.create(name=name, caption=caption, url=url)
+        meme = serializer.save()
+        response_serialized_meme = serializers.MemeSerializer(meme).data
+        return Response(response_serialized_meme, status=status.HTTP_201_CREATED)

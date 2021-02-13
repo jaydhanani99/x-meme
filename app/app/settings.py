@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'core',
     'user',
-    'meme'
+    'meme',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,8 @@ STATIC_ROOT = '/vol/web/static'
 MEDIA_ROOT = '/vol/web/media'
 
 AUTH_USER_MODEL = 'core.User'
+
+SWAGGER_SETTINGS = {
+    # To remove authorize button in swagger UI
+    'SECURITY_DEFINITIONS': None
+}

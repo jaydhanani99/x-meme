@@ -24,4 +24,12 @@ class Migration(migrations.Migration):
             sql='CREATE FULLTEXT INDEX `name` on core_meme(`name`);',
             reverse_sql='ALTER TABLE core_meme DROP INDEX `name`',
         ),
+        migrations.RunSQL(
+            sql='CREATE FULLTEXT INDEX `caption` on core_meme(`caption`);',
+            reverse_sql='ALTER TABLE core_meme DROP INDEX `caption`',
+        ),
+        migrations.RunSQL(
+            sql='CREATE FULLTEXT INDEX `url` on core_meme(`url`);',
+            reverse_sql='ALTER TABLE core_meme DROP INDEX `url`',
+        ),
     ]

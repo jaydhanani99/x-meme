@@ -16,8 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework_swagger.views import get_swagger_view
+
+
+# We exclude user_url_pattern from swagger UI so we add it in urlpatterns at last
+user_url_pattern = path('api/user/', include('user.urls', namespace='user_apis'))
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/user/', include('user.urls')),
     path('api/', include('meme.urls')),
+]
+
+schema_view = get_swagger_view(title='x-memes', patterns=urlpatterns.copy())
+
+# At last we add user_url_pattern and swagger-ui url
+urlpatterns += [
+    user_url_pattern,
+    path('swagger-ui/', schema_view)
 ]

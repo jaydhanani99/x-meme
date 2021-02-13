@@ -3,3 +3,4 @@ djangorestframework>=3.9.0,<3.10.0
 mysqlclient
 sqlparse
 uWSGI>=2.0.18,<2.1
+django-rest-swagger
