@@ -1,6 +1,7 @@
 from rest_framework import viewsets, mixins, pagination, status
 from rest_framework.response import Response
 from django.db import IntegrityError
+from rest_framework import filters
 
 from core.models import Meme
 from meme import serializers
@@ -22,8 +23,27 @@ class MemePagination(pagination.PageNumberPagination):
 class MemeViewSet(viewsets.ModelViewSet):
     """Manage memes in database"""
     queryset = Meme.objects.all().order_by('-id')
+
     serializer_class = serializers.MemeSerializer
     pagination_class = MemePagination
+
+    filter_backends = [filters.SearchFilter]
+    # global full text search for caption and name
+    search_fields = ['caption', 'name']
+
+    # def get_queryset(self):
+    #     queryset = self.queryset
+
+    #     caption = self.request.query_params.get('caption', None)
+    #     if caption is not None:
+    #         queryset = queryset.filter(caption__contains=caption)
+
+    #     name = self.request.query_params.get('name', None)
+    #     if name is not None:
+    #         queryset = queryset.filter(name__contains=name)
+
+    #     return queryset
+
 
     def get_serializer_class(self):
         serializer_class = self.serializer_class
